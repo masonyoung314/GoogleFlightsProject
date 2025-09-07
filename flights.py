@@ -44,7 +44,7 @@ def searchFlights():
     departure_time = results["best_flights"][0]["flights"][0]["departure_airport"]["time"]
     arrival_time = results["best_flights"][0]["flights"][0]["arrival_airport"]["time"]
     flight_number = results["best_flights"][0]["flights"][0]["flight_number"]
-    file_name = str(time.localtime()) + ".json"
+    file_name = str(time.localtime().tm_mon) + "-" + str(time.localtime().tm_mday) + "-" + str(time.localtime().tm_year) + "_" + str(time.localtime().tm_hour) +  ".json"
     with open(file_name, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
@@ -63,15 +63,14 @@ while running:
        or (current_time.tm_hour == 14 and current_time.tm_min == 0 and current_time.tm_sec == 0) 
        or (current_time.tm_hour == 22 and current_time.tm_min == 0 and current_time.tm_sec == 0)):
             searchFlights()
-            print("Current best flights: \n")
-            for flight in dailyBestFlights:
-                  printFlight(flight)
+            print("")
     elif (current_time.tm_hour == 23 and current_time.tm_min == 59 and current_time.tm_sec == 59):
           best = dailyBestFlights[0]
           for flight in dailyBestFlights:
                 if (flight.price < best.price):
                       best = flight
-          print("Best flight of the day:\n")
+          print("Best flight of the day:")
           printFlight(best)
+          print("")
           dailyBestFlights = []
 
