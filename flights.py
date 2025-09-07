@@ -15,9 +15,10 @@ params = {
     "departure_id": "AMS",
     "arrival_id": "TFS",
     "outbound_date": "2025-12-12",
-    "return_date": "2026-01-07",
+    "return_date": "2026-01-06",
     "currency": "USD",
-    "deep_search": "true"
+    "deep_search": "true",
+    "no_cache": "true"
 }
 
 class BestFlight:
@@ -43,7 +44,8 @@ def searchFlights():
     departure_time = results["best_flights"][0]["flights"][0]["departure_airport"]["time"]
     arrival_time = results["best_flights"][0]["flights"][0]["arrival_airport"]["time"]
     flight_number = results["best_flights"][0]["flights"][0]["flight_number"]
-    with open("output.json", "w", encoding="utf-8") as f:
+    file_name = str(time.localtime()) + ".json"
+    with open(file_name, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
 
@@ -71,3 +73,5 @@ while running:
                       best = flight
           print("Best flight of the day:\n")
           printFlight(best)
+          dailyBestFlights = []
+
