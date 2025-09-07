@@ -2,10 +2,13 @@ import time
 import requests
 from serpapi import GoogleSearch
 import json
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 params = {
-    "api_key": "5691d533a6653d970357220a5267f9d4b268c56910eb3875c9331043aa3f4bcf",
+    "api_key": os.getenv("API_KEY"),
     "engine": "google_flights",
     "hl": "en",
     "gl": "us",
@@ -58,6 +61,9 @@ while running:
        or (current_time.tm_hour == 14 and current_time.tm_min == 0 and current_time.tm_sec == 0) 
        or (current_time.tm_hour == 22 and current_time.tm_min == 0 and current_time.tm_sec == 0)):
             searchFlights()
+            print("Current best flights: \n")
+            for flight in dailyBestFlights:
+                  printFlight(flight)
     elif (current_time.tm_hour == 23 and current_time.tm_min == 59 and current_time.tm_sec == 59):
           best = dailyBestFlights[0]
           for flight in dailyBestFlights:
@@ -65,4 +71,3 @@ while running:
                       best = flight
           print("Best flight of the day:\n")
           printFlight(best)
-
